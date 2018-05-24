@@ -1,0 +1,26 @@
+type Location {
+	lat: Float!
+	lon: Float!
+	name: String
+	streetNumber: String
+	streetName: String
+	city: String
+	state: String
+	stateCode: String
+	zipCode: String
+	country: String
+	countryCode: String
+	tideStations(limit: Int): [TideStation]
+}
+
+type Query {
+	"""
+	Look up the coordinates for a location.
+	"""
+	geocode(query: String!, limit: Int, countryCodes: [String]): [Location]
+
+	"""
+	Look up the location from a coordinate.
+	"""
+	reverseGeocode(query: Coordinate!): Location
+}
