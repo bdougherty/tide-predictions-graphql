@@ -1,0 +1,28 @@
+enum DistanceUnit {
+	"""
+	Miles
+	"""
+	mi
+
+	"""
+	Kilometers
+	"""
+	km
+}
+
+enum TimeZoneFormat {
+	"""
+	Full name of the time zone (e.g. “America/New_York”).
+	"""
+	name
+
+	"""
+	The abbreviation of the time zone name (e.g. “EDT”).
+	"""
+	abbr
+
+	"""
+	The offset from UTC (e.g. “-04:00”).
+	"""
+	offset
+}

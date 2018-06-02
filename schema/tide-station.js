@@ -37,10 +37,6 @@ export default {
 		ft: 'english',
 		m: 'metric'
 	},
-	DistanceUnit: {
-		mi: 'miles',
-		km: 'kilometers'
-	},
 	TideStation: {
 		id: (station) => station.stationId,
 		name: (station) => formatTideStationName(station.etidesStnName),
