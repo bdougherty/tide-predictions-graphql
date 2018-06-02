@@ -11,6 +11,7 @@ type Location {
 	country: String
 	countryCode: String
 	tideStations(limit: Int): [TideStation]
+	waterTemperatures(limit: Int): [WaterTemperatureSite]
 }
 
 type Query {
