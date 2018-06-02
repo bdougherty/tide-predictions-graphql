@@ -1,4 +1,5 @@
 import moment from 'moment-timezone';
+import calculateDistance from '../lib/distance';
 import { formatTimeZone } from '../lib/time';
 import {
 	getWaterTemperature,
@@ -23,6 +24,20 @@ export default {
 		url: (source) => `https://waterdata.usgs.gov/nwis/uv?site_no=${source.sourceInfo.siteCode[0].value}`,
 		lat: (source) => source.sourceInfo.geoLocation.geogLocation.latitude,
 		lon: (source) => source.sourceInfo.geoLocation.geogLocation.longitude,
+		distance: (site, { from, units }) => {
+			if (!from && site.distance) {
+				return site.distance;
+			}
+
+			if (!from) {
+				throw new Error('Must provide from to calculate distance.');
+			}
+
+			const { latitude, longitude } = site.sourceInfo.geoLocation.geogLocation;
+			const fromPoint = [latitude, longitude];
+			const toPoint = [from.lat, from.lon];
+			return calculateDistance(fromPoint, toPoint, units);
+		},
 		temperature: (source, { unit = 'C' }) => {
 			const temperatureInCelsius = parseFloat(source.values[0].value[0].value);
 

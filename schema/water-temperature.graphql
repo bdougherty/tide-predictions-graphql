@@ -16,6 +16,7 @@ type WaterTemperatureSite {
 	url: String!
 	lat: Float!
 	lon: Float!
+	distance(from: Coordinate, units: DistanceUnit): Float!
 	temperature(unit: WaterTemperatureUnit): Float!
 	timeZone(format: TimeZoneFormat): String!
 	time: String!
