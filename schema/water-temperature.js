@@ -19,11 +19,11 @@ export default {
 		}
 	},
 	WaterTemperatureSite: {
-		id: (source) => source.sourceInfo.siteCode[0].value,
-		name: (source) => source.sourceInfo.siteName,
-		url: (source) => `https://waterdata.usgs.gov/nwis/uv?site_no=${source.sourceInfo.siteCode[0].value}`,
-		lat: (source) => source.sourceInfo.geoLocation.geogLocation.latitude,
-		lon: (source) => source.sourceInfo.geoLocation.geogLocation.longitude,
+		id: (site) => site.sourceInfo.siteCode[0].value,
+		name: (site) => site.sourceInfo.siteName,
+		url: (site) => `https://waterdata.usgs.gov/nwis/uv?site_no=${site.sourceInfo.siteCode[0].value}`,
+		lat: (site) => site.sourceInfo.geoLocation.geogLocation.latitude,
+		lon: (site) => site.sourceInfo.geoLocation.geogLocation.longitude,
 		distance: (site, { from, units }) => {
 			if (!from && site.distance) {
 				return site.distance;
@@ -38,8 +38,8 @@ export default {
 			const toPoint = [from.lat, from.lon];
 			return calculateDistance(fromPoint, toPoint, units);
 		},
-		temperature: (source, { unit = 'C' }) => {
-			const temperatureInCelsius = parseFloat(source.values[0].value[0].value);
+		temperature: (site, { unit = 'F' }) => {
+			const temperatureInCelsius = parseFloat(site.values[0].value[0].value);
 
 			if (unit === 'F') {
 				const temperatureInFahrenheit = convertCelsiusToFahrenheit(temperatureInCelsius);
@@ -48,9 +48,9 @@ export default {
 
 			return truncateFloat(temperatureInCelsius, 1);
 		},
-		time: (source) => moment(source.values[0].value[0].dateTime).utc().format(),
-		timeZone: (source, { format = 'name' }) => {
-			const { latitude, longitude } = source.sourceInfo.geoLocation.geogLocation;
+		time: (site) => moment(site.values[0].value[0].dateTime).utc().format(),
+		timeZone: (site, { format = 'name' }) => {
+			const { latitude, longitude } = site.sourceInfo.geoLocation.geogLocation;
 			const coordinate = [latitude, longitude];
 			return formatTimeZone(coordinate, format);
 		}
