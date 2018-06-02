@@ -78,8 +78,8 @@ type TideStation {
 	id: ID!
 	name: String!
 	commonName: String!
-	lat: Float!
-	lon: Float!
+	lat: Latitude!
+	lon: Longitude!
 	state: String!
 	region: String!
 	timeZone(format: TimeZoneFormat): String!

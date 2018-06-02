@@ -1,4 +1,4 @@
 input Coordinate {
-	lat: Float!
-	lon: Float!
+	lat: Latitude!
+	lon: Longitude!
 }

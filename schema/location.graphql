@@ -1,6 +1,6 @@
 type Location {
-	lat: Float!
-	lon: Float!
+	lat: Latitude!
+	lon: Longitude!
 	name: String
 	streetNumber: String
 	streetName: String
