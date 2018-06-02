@@ -5,9 +5,9 @@ import {
 	fetchPredictionsForTideStation,
 	fetchTideStations,
 	formatTideStationName,
-	formatTimeZone,
 	getStationsByDistance
 } from '../lib/tide-station';
+import { formatTimeZone } from '../lib/time';
 
 const appName = process.env.APPLICATION;
 

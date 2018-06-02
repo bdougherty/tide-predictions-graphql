@@ -1,4 +1,12 @@
-import { getWaterTemperature, getWaterTemperaturesNear, orderSitesByDistance, convertCelsiusToFahrenheit, truncateFloat } from '../lib/water-temperature';
+import moment from 'moment-timezone';
+import { formatTimeZone } from '../lib/time';
+import {
+	getWaterTemperature,
+	getWaterTemperaturesNear,
+	orderSitesByDistance,
+	convertCelsiusToFahrenheit,
+	truncateFloat
+} from '../lib/water-temperature';
 
 export default {
 	Query: {
@@ -24,6 +32,12 @@ export default {
 			}
 
 			return truncateFloat(temperatureInCelsius, 1);
+		},
+		time: (source) => moment(source.values[0].value[0].dateTime).utc().format(),
+		timeZone: (source, { format = 'name' }) => {
+			const { latitude, longitude } = source.sourceInfo.geoLocation.geogLocation;
+			const coordinate = [latitude, longitude];
+			return formatTimeZone(coordinate, format);
 		}
 	}
 };
