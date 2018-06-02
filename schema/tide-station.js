@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 // import { GraphQLError } from 'graphql/error';
+import calculateDistance from '../lib/distance';
 import {
-	calculateDistance,
 	fetchPredictionsForTideStation,
 	fetchTideStations,
 	formatTideStationName,
