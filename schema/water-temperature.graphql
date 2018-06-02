@@ -1,0 +1,32 @@
+enum WaterTemperatureUnit {
+	"""
+	Celsius
+	"""
+	C
+
+	"""
+	Fahrenheit
+	"""
+	F
+}
+
+type WaterTemperatureSite {
+	id: ID!
+	name: String!
+	url: String!
+	lat: Float!
+	lon: Float!
+	temperature(unit: WaterTemperatureUnit): Float!
+}
+
+type Query {
+	"""
+	Get the water temperature for a specific site.
+	"""
+	waterTemperature(id: ID!): WaterTemperatureSite
+
+	"""
+	Get the water temperature for a number of sites near a given coordinate.
+	"""
+	waterTemperatures(near: Coordinate!, limit: Int): [WaterTemperatureSite]
+}

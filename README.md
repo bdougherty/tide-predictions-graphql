@@ -4,7 +4,7 @@
 
 It provides a simpler and more user-friendly API than the original NOAA API, in addition to geocoding capabilities.
 
-Tide data provided by [NOAA CO-OPS API](https://tidesandcurrents.noaa.gov/api/). Geocoding and reverse geocoding powered by [OpenStreetMap Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim).
+Tide data provided by [NOAA CO-OPS API](https://tidesandcurrents.noaa.gov/api/). Water temperature data provided by [USGS Instantaneous Values Web Service](https://waterservices.usgs.gov/rest/IV-Service.html). Geocoding and reverse geocoding powered by [OpenStreetMap Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim).
 
 ## Usage
 
