@@ -10,15 +10,15 @@ type Location {
 	zipCode: String
 	country: String
 	countryCode: String
-	tideStations(limit: Int): [TideStation]
-	waterTemperatures(limit: Int): [WaterTemperatureSite]
+	tideStations(limit: Int = 1): [TideStation]
+	waterTemperatures(limit: Int = 1): [WaterTemperatureSite]
 }
 
 type Query {
 	"""
 	Look up the coordinates for a location.
 	"""
-	geocode(query: String!, limit: Int, countryCodes: [String]): [Location]
+	geocode(query: String!, limit: Int = 1, countryCodes: [String]): [Location]
 
 	"""
 	Look up the location from a coordinate.

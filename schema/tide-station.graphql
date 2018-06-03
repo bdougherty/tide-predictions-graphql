@@ -82,10 +82,10 @@ type TideStation {
 	lon: Longitude!
 	state: String!
 	region: String!
-	timeZone(format: TimeZoneFormat): String!
+	timeZone(format: TimeZoneFormat = name): String!
 	type: StationType!
-	distance(from: Coordinate, units: DistanceUnit): Float!
-	predictions(days: Int, datum: PredictionDatum, units: PredictionUnit): [TidePrediction]
+	distance(from: Coordinate, units: DistanceUnit = mi): Float!
+	predictions(days: Int = 2, datum: PredictionDatum = MLLW, units: PredictionUnit = ft): [TidePrediction]
 	url: String!
 	tidesUrl: String!
 }
@@ -107,5 +107,5 @@ type Query {
 	"""
 	Get a list of tide stations near a given coordinate.
 	"""
-	stations(near: Coordinate!, limit: Int): [TideStation]
+	stations(near: Coordinate!, limit: Int = 1): [TideStation]
 }

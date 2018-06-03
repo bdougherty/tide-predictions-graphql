@@ -31,5 +31,5 @@ type Query {
 	"""
 	Get the water temperature for a number of sites near a given coordinate.
 	"""
-	waterTemperatures(near: Coordinate!, limit: Int): [WaterTemperatureSite]
+	waterTemperatures(near: Coordinate!, limit: Int = 1): [WaterTemperatureSite]
 }

@@ -17,7 +17,7 @@ export default {
 			const stations = await fetchTideStations();
 			return stations.get(id);
 		},
-		stations: async (obj, { near, limit = 1 }) => {
+		stations: async (obj, { near, limit }) => {
 			// validateCoordinate(near);
 
 			const stations = await fetchTideStations();
@@ -61,7 +61,7 @@ export default {
 			const coordinate = [station.lat, station.lon];
 			return formatTimeZone(coordinate, format);
 		},
-		predictions: async (station, { days = 2, datum, units }) => {
+		predictions: async (station, { days, datum, units }) => {
 			const predictions = await fetchPredictionsForTideStation(station, { days, datum, units, appName });
 			return predictions;
 		}

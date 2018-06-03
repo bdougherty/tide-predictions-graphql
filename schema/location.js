@@ -5,7 +5,7 @@ import { getWaterTemperaturesNear, orderSitesByDistance } from '../lib/water-tem
 
 export default {
 	Query: {
-		geocode: async (obj, { query, limit = 1, countryCodes }) => {
+		geocode: async (obj, { query, limit, countryCodes }) => {
 			const locations = await forwardGeocode(query, countryCodes);
 			return locations.slice(0, limit);
 		},
@@ -28,7 +28,7 @@ export default {
 		zipCode: (location) => location.address.postcode,
 		country: (location) => location.address.country,
 		countryCode: (location) => location.address.country_code.toUpperCase(),
-		tideStations: async (location, { limit = 1 }) => {
+		tideStations: async (location, { limit }) => {
 			const stations = await fetchTideStations();
 			const stationsWithDistances = getStationsByDistance(stations, {
 				lat: parseFloat(location.lat),
@@ -36,7 +36,7 @@ export default {
 			});
 			return stationsWithDistances.slice(0, limit);
 		},
-		waterTemperatures: async (location, { limit = 1 }) => {
+		waterTemperatures: async (location, { limit }) => {
 			const near = {
 				lat: parseFloat(location.lat),
 				lon: parseFloat(location.lon)
