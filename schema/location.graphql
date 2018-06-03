@@ -12,6 +12,10 @@ type Location {
 	countryCode: String
 	tideStations(limit: Int = 1): [TideStation]
 	waterTemperatures(limit: Int = 1): [WaterTemperatureSite]
+	weatherForecast(
+		units: WeatherForecastUnits = auto,
+		extendedHourly: Boolean = false
+	): WeatherForecast
 }
 
 type Query {

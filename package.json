@@ -1,6 +1,6 @@
 {
   "name": "tide-predictions-graphql",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A GraphQL service to find the nearest tide prediction station and get predictions for the next few days.",
   "main": "index.js",
   "author": "Brad Dougherty <me@brad.is>",
@@ -49,7 +49,8 @@
     "env": [
       "ACCESS_CONTROL_ALLOW_ORIGIN",
       "APPLICATION",
-      "ENABLE_GRAPHIQL"
+      "ENABLE_GRAPHIQL",
+      "DARK_SKY_API_KEY"
     ]
   },
   "ava": {

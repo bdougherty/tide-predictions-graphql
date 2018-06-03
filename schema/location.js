@@ -2,6 +2,7 @@ import stateNamesToAbbreviations from 'datasets-us-states-names-abbr';
 import { forwardGeocode, reverseGeocode, getCityName, formatAddress } from '../lib/location';
 import { fetchTideStations, getStationsByDistance } from '../lib/tide-station';
 import { getWaterTemperaturesNear, orderSitesByDistance } from '../lib/water-temperature';
+import { fetchWeatherForecast } from '../lib/weather';
 
 export default {
 	Query: {
@@ -45,6 +46,9 @@ export default {
 			const sites = await getWaterTemperaturesNear(near);
 			const sitesByDistance = orderSitesByDistance(sites, near);
 			return sitesByDistance.slice(0, limit);
+		},
+		weatherForecast: async (location, { units, extendedHourly }) => {
+			return fetchWeatherForecast(location, { units, extendedHourly });
 		}
 	}
 };

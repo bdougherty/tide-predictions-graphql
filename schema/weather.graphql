@@ -1,0 +1,279 @@
+"Units to use for values returned in the weather forecast."
+enum WeatherForecastUnits {
+	"Automatically select units based on geographic location."
+	auto
+
+	"Imperial units (℉, mph)."
+	us
+
+	"SI units (℃, m/s)."
+	si
+
+	"Same as si, except that windSpeed is in kilometers per hour."
+	ca
+
+	"Same as si, except that visibility is in miles and windSpeed is in miles per hour."
+	uk2
+}
+
+"The type of precipitation expected to occur at the given time."
+enum PrecipitationType {
+	rain
+	snow
+	sleet
+}
+
+"Information about the forecasted precipitation."
+type Precipitation {
+	"The probability of precipitation occurring, between 0 and 1, inclusive."
+	probability: Float!
+
+	"The intensity (in units of liquid water per hour) of precipitation occurring at the given time."
+	intensity: Float!
+
+	"The type of precipitation expected to occur at the given time."
+	type: PrecipitationType
+}
+
+"Risk of harm from unprotected sun exposure, for the average adult."
+enum UvIndexRisk {
+	low
+	moderate
+	high
+	veryhigh
+	extreme
+}
+
+"Media graphic color for the UV Index."
+enum UvIndexColor {
+	"Low risk"
+	green
+
+	"Moderate risk"
+	yellow
+
+	"High risk"
+	orange
+
+	"Very high risk"
+	red
+
+	"Extreme risk"
+	violet
+}
+
+"The UV Index."
+type UvIndex {
+	"The UV Index."
+	index: Int
+
+	"Risk of harm from unprotected sun exposure, for the average adult."
+	risk: UvIndexRisk
+
+	"Media graphic color for the UV Index."
+	color: UvIndexColor
+}
+
+"The direction that the wind is coming from as cardinal direction."
+enum WindDirection {
+	N
+	NNE
+	NE
+	ENE
+	E
+	ESE
+	SE
+	SSE
+	S
+	SSW
+	SW
+	WSW
+	W
+	WNW
+	NW
+	NNW
+}
+
+"Forecasted wind conditions."
+type Wind {
+	"The wind speed."
+	speed: Float!
+
+	"The wind gust speed."
+	gust: Float!
+
+	"The direction that the wind is coming from in degrees, with true north at 0° and progressing clockwise."
+	bearing: Int!
+
+	"The direction that the wind is coming from as cardinal direction."
+	direction: WindDirection
+}
+
+"A machine-readable text summary of this data point, suitable for selecting an icon for display."
+enum WeatherIcon {
+	clear_day
+	clear_night
+	rain
+	snow
+	sleet
+	wind
+	fog
+	cloudy
+	partly_cloudy_day
+	partly_cloudy_night
+}
+
+"Forecast for a given hour at the requested location."
+type HourlyForecast {
+	"The time that the forecast was created, in ISO 8600 time string."
+	time: String!
+
+	"A machine-readable text summary of this data point, suitable for selecting an icon for display."
+	icon: String!
+
+	"A human-readable text summary of this data point."
+	summary: String!
+
+	"The air temperature in degrees."
+	temperature: Float!
+
+	"The apparent (or “feels like”) temperature."
+	apparentTemperature: Float!
+
+	"Information about the forecasted precipitation."
+	precipitation: Precipitation!
+
+	"Forecasted wind conditions."
+	wind: Wind!
+
+	"The relative humidity, between 0 and 1, inclusive."
+	humidity: Float
+
+	"The dew point in degrees."
+	dewPoint: Float
+
+	"The sea-level air pressure in millibars."
+	pressure: Float
+
+	"The average visibility in miles, capped at 10 miles."
+	visibility: Float
+
+	"The percentage of sky occluded by clouds, between 0 and 1, inclusive."
+	cloudCover: Float
+
+	"The UV Index."
+	uvIndex: UvIndex
+
+	"The columnar density of total atmospheric ozone at the given time in Dobson units."
+	ozone: Float
+}
+
+"The severity of a weather alert."
+enum WeatherAlertSeverity {
+	"an individual should be aware of potentially severe weather"
+	advisory
+
+	"an individual should prepare for potentially severe weather"
+	watch
+
+	"an individual should take immediate action to protect themselves and others from potentially severe weather"
+	warning
+}
+
+"Severe weather warnings issued for the requested location by a governmental authority."
+type WeatherAlert {
+	"A brief description of the alert."
+	title: String!
+
+	"A detailed description of the alert."
+	description: String!
+
+	"The ISO 8601 time at which the alert was issued."
+	time: String!
+
+	"The ISO 8601 time at which the alert will expire."
+	expires: String!
+
+	"The severity of the weather alert."
+	severity: WeatherAlertSeverity!
+
+	"An array of strings representing the names of the regions covered by this weather alert."
+	regions: [String!]!
+
+	"An HTTP(S) URL that one may refer to for detailed information about the alert."
+	url: String!
+}
+
+"The weather forecast for the requested location."
+type WeatherForecast {
+	"The latitude for the forecast."
+	lat: Latitude!
+
+	"The longitude for the forecast."
+	lon: Longitude!
+
+	"The time that the forecast was created, in ISO 8601 time string."
+	time: String!
+
+	"The time zone for the forecasted location."
+	timeZone(format: TimeZoneFormat = name): String!
+
+	"The units used for prediction measurements."
+	units: WeatherForecastUnits!
+
+	"A machine-readable text summary of this data point, suitable for selecting an icon for display."
+	icon: String!
+
+	"A human-readable text summary of this data point."
+	summary: String!
+
+	"The air temperature in degrees."
+	temperature: Float!
+
+	"The apparent (or “feels like”) temperature."
+	apparentTemperature: Float!
+
+	"Information about the forecasted precipitation."
+	precipitation: Precipitation!
+
+	"Forecasted wind conditions."
+	wind: Wind!
+
+	"The relative humidity, between 0 and 1, inclusive."
+	humidity: Float
+
+	"The dew point in degrees."
+	dewPoint: Float
+
+	"The sea-level air pressure in millibars."
+	pressure: Float
+
+	"The average visibility in miles, capped at 10 miles."
+	visibility: Float
+
+	"The percentage of sky occluded by clouds, between 0 and 1, inclusive."
+	cloudCover: Float
+
+	"The UV Index."
+	uvIndex: UvIndex
+
+	"The columnar density of total atmospheric ozone at the given time in Dobson units."
+	ozone: Float
+
+	"Hourly forecast for the next 48 hours."
+	hourly: [HourlyForecast]
+
+	"Severe weather warnings issued for the requested location by a governmental authority."
+	alerts: [WeatherAlert!]
+}
+
+type Query {
+	"Get the weather forecast for a given coordinate."
+	weatherForecast(
+		location: Coordinate!,
+		units: WeatherForecastUnits = auto,
+
+		"When set to true, return hour-by-hour data for the next 168 hours, instead of the next 48."
+		extendedHourly: Boolean = false
+	): WeatherForecast
+}
