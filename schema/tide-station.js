@@ -65,7 +65,6 @@ export default {
 	},
 	TidePrediction: {
 		height: (prediction) => parseFloat(prediction.v),
-		time: (prediction) => moment.tz(prediction.t, 'YYYY-MM-DD HH:mm', prediction.tz).format(),
-		unixTime: (prediction) => moment.tz(prediction.t, 'YYYY-MM-DD HH:mm', prediction.tz).unix()
+		time: (prediction) => moment.tz(prediction.t, 'YYYY-MM-DD HH:mm', prediction.tz).utc().format()
 	}
 };

@@ -94,8 +94,6 @@ type TidePrediction {
 	type: PredictionType!
 	height: Float!
 	time: String!
-	unixTime: Int!
-	station: TideStation
 }
 
 type Query {
