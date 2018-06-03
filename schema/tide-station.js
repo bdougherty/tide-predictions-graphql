@@ -1,5 +1,4 @@
 import moment from 'moment-timezone';
-// import { GraphQLError } from 'graphql/error';
 import calculateDistance from '../lib/distance';
 import {
 	fetchPredictionsForTideStation,
@@ -18,8 +17,6 @@ export default {
 			return stations.get(id);
 		},
 		stations: async (obj, { near, limit }) => {
-			// validateCoordinate(near);
-
 			const stations = await fetchTideStations();
 			const stationsWithDistances = getStationsByDistance(stations, near);
 			return stationsWithDistances.slice(0, limit);

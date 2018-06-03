@@ -11,8 +11,6 @@ export default {
 			return locations.slice(0, limit);
 		},
 		reverseGeocode: async (obj, { query }) => {
-			// validateCoordinate(query);
-
 			const locations = await reverseGeocode(query);
 			return locations;
 		}
