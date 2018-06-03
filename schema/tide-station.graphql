@@ -80,7 +80,7 @@ type TidePrediction {
 	height: Float!
 
 	"The predicted time for the tide, as an ISO 8601 time string."
-	time: String!
+	time: DateTime!
 }
 
 "A station for reporting tides."

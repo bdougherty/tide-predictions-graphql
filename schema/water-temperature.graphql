@@ -25,7 +25,7 @@ type WaterTemperatureSite {
 	lon: Longitude!
 
 	"The time for the temperature reading, in ISO 8601 string format."
-	time: String!
+	time: DateTime!
 
 	"The local time zone of the site."
 	timeZone(format: TimeZoneFormat): String!

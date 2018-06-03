@@ -126,7 +126,7 @@ enum WeatherIcon {
 "Forecast for a given hour at the requested location."
 type HourlyForecast {
 	"The time that the forecast was created, in ISO 8600 time string."
-	time: String!
+	time: DateTime!
 
 	"A machine-readable text summary of this data point, suitable for selecting an icon for display."
 	icon: WeatherIcon!
@@ -189,10 +189,10 @@ type WeatherAlert {
 	description: String!
 
 	"The ISO 8601 time at which the alert was issued."
-	time: String!
+	time: DateTime!
 
 	"The ISO 8601 time at which the alert will expire."
-	expires: String!
+	expires: DateTime!
 
 	"The severity of the weather alert."
 	severity: WeatherAlertSeverity!
@@ -213,7 +213,7 @@ type WeatherForecast {
 	lon: Longitude!
 
 	"The time that the forecast was created, as an ISO 8601 time string."
-	time: String!
+	time: DateTime!
 
 	"The time zone for the forecasted location."
 	timeZone(format: TimeZoneFormat = name): String!

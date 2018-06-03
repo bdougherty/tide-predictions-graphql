@@ -1,4 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
+import { GraphQLDateTime } from 'graphql-iso-date';
 
 const validateLongitude = (value) => {
 	value = parseFloat(value);
@@ -21,6 +22,7 @@ const validateLatitude = (value) => {
 };
 
 export default {
+	DateTime: GraphQLDateTime,
 	Longitude: new GraphQLScalarType({
 		name: 'Longitude',
 		description: 'The longitude value of a geographic coordinate. Must be a float between `-90` and `90`, inclusive.',
