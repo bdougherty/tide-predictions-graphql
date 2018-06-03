@@ -1,35 +1,46 @@
+"A unit for measuring water temperature."
 enum WaterTemperatureUnit {
-	"""
-	Celsius
-	"""
+	"Celsius"
 	C
 
-	"""
-	Fahrenheit
-	"""
+	"Fahrenheit"
 	F
 }
 
+"A site for reporting water temperature."
 type WaterTemperatureSite {
+	"The USGS ID of the site."
 	id: ID!
+
+	"The display name for the site."
 	name: String!
+
+	"The URL for the main page of the site."
 	url: String!
+
+	"The latitude of the site."
 	lat: Latitude!
+
+	"The longitude of the site."
 	lon: Longitude!
-	distance(from: Coordinate, units: DistanceUnit): Float!
-	temperature(unit: WaterTemperatureUnit): Float!
-	timeZone(format: TimeZoneFormat): String!
+
+	"The time for the temperature reading, in ISO 8601 string format."
 	time: String!
+
+	"The local time zone of the site."
+	timeZone(format: TimeZoneFormat): String!
+
+	"The current temperature recorded at the site."
+	temperature(unit: WaterTemperatureUnit): Float!
+
+	"Get the distance between this site and a coordinate."
+	distance(from: Coordinate, units: DistanceUnit): Float!
 }
 
 type Query {
-	"""
-	Get the water temperature for a specific site.
-	"""
+	"Get the water temperature for a specific site."
 	waterTemperature(id: ID!): WaterTemperatureSite
 
-	"""
-	Get the water temperature for a number of sites near a given coordinate.
-	"""
-	waterTemperatures(near: Coordinate!, limit: Int = 1): [WaterTemperatureSite]
+	"Get the water temperature for a number of sites near a given coordinate."
+	waterTemperatures(coordinate: Coordinate!, limit: Int = 1): [WaterTemperatureSite]
 }

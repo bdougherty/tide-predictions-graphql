@@ -9,10 +9,10 @@ enum WeatherForecastUnits {
 	"SI units (℃, m/s)."
 	si
 
-	"Same as si, except that windSpeed is in kilometers per hour."
+	"Same as si, except that `wind.speed` is in kilometers per hour."
 	ca
 
-	"Same as si, except that visibility is in miles and windSpeed is in miles per hour."
+	"Same as si, except that `visibility` is in miles and `wind.speed` is in miles per hour."
 	uk2
 }
 
@@ -129,7 +129,7 @@ type HourlyForecast {
 	time: String!
 
 	"A machine-readable text summary of this data point, suitable for selecting an icon for display."
-	icon: String!
+	icon: WeatherIcon!
 
 	"A human-readable text summary of this data point."
 	summary: String!
@@ -212,7 +212,7 @@ type WeatherForecast {
 	"The longitude for the forecast."
 	lon: Longitude!
 
-	"The time that the forecast was created, in ISO 8601 time string."
+	"The time that the forecast was created, as an ISO 8601 time string."
 	time: String!
 
 	"The time zone for the forecasted location."
@@ -222,7 +222,7 @@ type WeatherForecast {
 	units: WeatherForecastUnits!
 
 	"A machine-readable text summary of this data point, suitable for selecting an icon for display."
-	icon: String!
+	icon: WeatherIcon!
 
 	"A human-readable text summary of this data point."
 	summary: String!
@@ -270,7 +270,7 @@ type WeatherForecast {
 type Query {
 	"Get the weather forecast for a given coordinate."
 	weatherForecast(
-		location: Coordinate!,
+		coordinate: Coordinate!,
 		units: WeatherForecastUnits = auto,
 
 		"When set to true, return hour-by-hour data for the next 168 hours, instead of the next 48."

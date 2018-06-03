@@ -1,31 +1,63 @@
+"A coordinate and its associated address."
 type Location {
+	"The latitude of the location."
 	lat: Latitude!
+
+	"The longitude of the location."
 	lon: Longitude!
-	name: String
+
+	"The display name."
+	name: String!
+
+	"The street number."
 	streetNumber: String
+
+	"The street name."
 	streetName: String
+
+	"The city, town, or village name."
 	city: String
+
+	"The full state name."
 	state: String
+
+	"The two-letter state abbreviation."
 	stateCode: String
+
+	"The postal code."
 	zipCode: String
+
+	"The full country name."
 	country: String
+
+	"The ISO 3166 country code."
 	countryCode: String
+
+	"Get tide predictions near this location."
 	tideStations(limit: Int = 1): [TideStation]
+
+	"Get the water temperatures from sites near this location."
 	waterTemperatures(limit: Int = 1): [WaterTemperatureSite]
+
+	"Get the weather forcast for this location."
 	weatherForecast(
 		units: WeatherForecastUnits = auto,
+
+		"When set to true, return hour-by-hour data for the next 168 hours, instead of the next 48."
 		extendedHourly: Boolean = false
 	): WeatherForecast
 }
 
 type Query {
-	"""
-	Look up the coordinates for a location.
-	"""
-	geocode(query: String!, limit: Int = 1, countryCodes: [String]): [Location]
+	"Look up the full location information for a location name."
+	geocode(
+		query: String!,
+		limit: Int = 1,
 
-	"""
-	Look up the location from a coordinate.
-	"""
+		"List of country codes used to give more relevant results."
+		countryCodes: [String]
+	): [Location]
+
+	"Look up the location from a coordinate."
 	reverseGeocode(query: Coordinate!): Location
 }

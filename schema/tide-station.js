@@ -16,9 +16,9 @@ export default {
 			const stations = await fetchTideStations();
 			return stations.get(id);
 		},
-		stations: async (obj, { near, limit }) => {
+		stations: async (obj, { coordinate, limit }) => {
 			const stations = await fetchTideStations();
-			const stationsWithDistances = getStationsByDistance(stations, near);
+			const stationsWithDistances = getStationsByDistance(stations, coordinate);
 			return stationsWithDistances.slice(0, limit);
 		}
 	},

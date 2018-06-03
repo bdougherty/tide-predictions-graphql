@@ -1,28 +1,20 @@
+"A unit for measuring distance."
 enum DistanceUnit {
-	"""
-	Miles
-	"""
+	"Miles"
 	mi
 
-	"""
-	Kilometers
-	"""
+	"Kilometers"
 	km
 }
 
+"The format for a time zone representation."
 enum TimeZoneFormat {
-	"""
-	Full name of the time zone (e.g. “America/New_York”).
-	"""
+	"Full name of the time zone (e.g. “America/New_York”)."
 	name
 
-	"""
-	The abbreviation of the time zone name (e.g. “EDT”).
-	"""
+	"The abbreviation of the time zone name (e.g. “EDT”)."
 	abbr
 
-	"""
-	The offset from UTC (e.g. “-04:00”).
-	"""
+	"The offset from UTC (e.g. “-04:00”)."
 	offset
 }

@@ -1,3 +1,4 @@
+"The type of tide prediction station."
 enum StationType {
 	"""
 	Harmonic stations are stations with tidal harmonic constants and tidal datums. Tide predictions for harmonic stations are generated directly from the harmonic constants.
@@ -10,14 +11,13 @@ enum StationType {
 	subordinate
 }
 
+"The type of tide prediction."
 enum PredictionType {
 	high
 	low
 }
 
-"""
-A tidal datum is a standard elevation defined by a certain phase of the tide.
-"""
+"A tidal datum is a standard elevation defined by a certain phase of the tide."
 enum PredictionDatum {
 	"""
 	Mean Higher High Water
@@ -62,48 +62,79 @@ enum PredictionDatum {
 	MLLW
 }
 
+"The units used for tide prediction height."
 enum PredictionUnit {
-	"""
-	Feet
-	"""
+	"Feet"
 	ft
 
-	"""
-	Meters
-	"""
+	"Meters"
 	m
 }
 
-type TideStation {
-	id: ID!
-	name: String!
-	commonName: String!
-	lat: Latitude!
-	lon: Longitude!
-	state: String!
-	region: String!
-	timeZone(format: TimeZoneFormat = name): String!
-	type: StationType!
-	distance(from: Coordinate, units: DistanceUnit = mi): Float!
-	predictions(days: Int = 2, datum: PredictionDatum = MLLW, units: PredictionUnit = ft): [TidePrediction]
-	url: String!
-	tidesUrl: String!
-}
-
+"A prediction for future tide levels."
 type TidePrediction {
+	"The type of tide, either `high` or `low`."
 	type: PredictionType!
+
+	"The predicted height of the tide."
 	height: Float!
+
+	"The predicted time for the tide, as an ISO 8601 time string."
 	time: String!
 }
 
+"A station for reporting tides."
+type TideStation {
+	"The NOAA station ID."
+	id: ID!
+
+	"The formatted display name of the station."
+	name: String!
+
+	"The formatted common name of the station."
+	commonName: String!
+
+	"The latitude of the station."
+	lat: Latitude!
+
+	"The longitude of the station."
+	lon: Longitude!
+
+	"The two-letter state code."
+	state: String!
+
+	"The NOAA region that the station is in."
+	region: String!
+
+	"The local time zone of the station."
+	timeZone(format: TimeZoneFormat = name): String!
+
+	"The type of this station, either `harmonic` or `subordinate`."
+	type: StationType!
+
+	"The URL for the main page of the station."
+	url: String!
+
+	"The URL for the tide prediction page of the station."
+	tidesUrl: String!
+
+	"Get the distance between this station and a coordinate."
+	distance(from: Coordinate, units: DistanceUnit): Float!
+
+	"An array of upcoming tide predictions for this station."
+	predictions(
+		days: Int = 2,
+		datum: PredictionDatum = MLLW,
+
+		"Units to use for the height for each prediction."
+		units: PredictionUnit
+	): [TidePrediction]
+}
+
 type Query {
-	"""
-	Get information on an individual tide station.
-	"""
+	"Get information on an individual tide station."
 	station(id: ID!): TideStation
 
-	"""
-	Get a list of tide stations near a given coordinate.
-	"""
-	stations(near: Coordinate!, limit: Int = 1): [TideStation]
+	"Get a list of tide stations near a given coordinate."
+	stations(coordinate: Coordinate!, limit: Int = 1): [TideStation]
 }

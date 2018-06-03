@@ -1,3 +1,4 @@
+"A geographic coordinate."
 input Coordinate {
 	lat: Latitude!
 	lon: Longitude!

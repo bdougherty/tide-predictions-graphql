@@ -27,8 +27,8 @@ export default {
 		/* eslint-enable camelcase */
 	},
 	Query: {
-		weatherForecast: async (obj, { location, units, extendedHourly }) => {
-			return fetchWeatherForecast(location, { units, extendedHourly });
+		weatherForecast: async (obj, { coordinate, units, extendedHourly }) => {
+			return fetchWeatherForecast(coordinate, { units, extendedHourly });
 		}
 	},
 	WeatherForecast: {

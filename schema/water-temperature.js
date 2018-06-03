@@ -12,9 +12,9 @@ import {
 export default {
 	Query: {
 		waterTemperature: async (obj, { id }) => getWaterTemperature(id),
-		waterTemperatures: async (obj, { near, limit }) => {
-			const sites = await getWaterTemperaturesNear(near);
-			const sitesByDistance = orderSitesByDistance(sites, near);
+		waterTemperatures: async (obj, { coordinate, limit }) => {
+			const sites = await getWaterTemperaturesNear(coordinate);
+			const sitesByDistance = orderSitesByDistance(sites, coordinate);
 			return sitesByDistance.slice(0, limit);
 		}
 	},
