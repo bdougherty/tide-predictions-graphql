@@ -1,4 +1,5 @@
-import moment from 'moment-timezone';
+import geoTz from 'geo-tz';
+import * as tc from 'timezonecomplete';
 import calculateDistance from '../lib/distance';
 import { formatTimeZone } from '../lib/time';
 import {
@@ -48,7 +49,14 @@ export default {
 
 			return truncateFloat(temperatureInCelsius, 1);
 		},
-		time: (site) => moment(site.values[0].value[0].dateTime).utc().format(),
+		time: (site) => {
+			const { latitude, longitude } = site.sourceInfo.geoLocation.geogLocation;
+			const zoneName = geoTz(latitude, longitude);
+			const zone = tc.zone(zoneName);
+			const date = new tc.DateTime(site.values[0].value[0].dateTime, zone);
+
+			return date.toZone(tc.utc()).toIsoString();
+		},
 		timeZone: (site, { format = 'name' }) => {
 			const { latitude, longitude } = site.sourceInfo.geoLocation.geogLocation;
 			const coordinate = [latitude, longitude];

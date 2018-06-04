@@ -1,4 +1,4 @@
-import moment from 'moment-timezone';
+import * as tc from 'timezonecomplete';
 import calculateDistance from '../lib/distance';
 import {
 	fetchPredictionsForTideStation,
@@ -65,6 +65,10 @@ export default {
 	},
 	TidePrediction: {
 		height: (prediction) => parseFloat(prediction.v),
-		time: (prediction) => moment.tz(prediction.t, 'YYYY-MM-DD HH:mm', prediction.tz).utc().format()
+		time: ({ t, tz }) => {
+			const timeZone = tc.zone(tz);
+			const date = new tc.DateTime(t, 'yyyy-MM-dd HH:mm', timeZone);
+			return date.toZone(tc.utc()).toIsoString();
+		}
 	}
 };

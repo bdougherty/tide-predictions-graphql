@@ -1,15 +1,10 @@
-import moment from 'moment-timezone';
-import { formatTimeZoneName } from '../lib/time';
+import { formatTimeZoneName, formatUnixTime } from '../lib/time';
 import {
 	fetchWeatherForecast,
 	getUvIndexColor,
 	getUvIndexRisk,
 	bearingToCardinalDirection
 } from '../lib/weather';
-
-const formatUnixTime = (unixTime, timeZone) => {
-	return moment(unixTime * 1000).tz(timeZone).utc().format();
-};
 
 export default {
 	WeatherIcon: {
@@ -34,7 +29,7 @@ export default {
 	WeatherForecast: {
 		lat: ({ latitude }) => latitude,
 		lon: ({ longitude }) => longitude,
-		time: (forecast) => formatUnixTime(forecast.currently.time, forecast.timezone),
+		time: (forecast) => formatUnixTime(forecast.currently.time),
 		timeZone: ({ timezone }, { format = 'name' }) => formatTimeZoneName(timezone, format),
 		units: (forecast) => forecast.flags.units,
 		icon: (forecast) => forecast.currently.icon,
@@ -50,18 +45,7 @@ export default {
 		cloudCover: (forecast) => forecast.currently.cloudCover,
 		uvIndex: ({ currently }) => currently,
 		ozone: (forecast) => forecast.currently.ozone,
-		hourly: (forecast) => forecast.hourly.data.map((hourlyForecast) => {
-			return {
-				timezone: forecast.timezone,
-				...hourlyForecast
-			};
-		}),
-		alerts: (forecast) => forecast.alerts.map((alert) => {
-			return {
-				timezone: forecast.timezone,
-				...alert
-			};
-		})
+		hourly: (forecast) => forecast.hourly.data
 	},
 	Precipitation: {
 		probability: ({ precipProbability = 0 }) => precipProbability,
@@ -80,14 +64,14 @@ export default {
 		direction: ({ windBearing }) => bearingToCardinalDirection(windBearing)
 	},
 	HourlyForecast: {
-		time: ({ time, timezone }) => formatUnixTime(time, timezone),
+		time: ({ time }) => formatUnixTime(time),
 		precipitation: (hourlyForecast) => hourlyForecast,
 		wind: (hourlyForecast) => hourlyForecast,
 		uvIndex: (hourlyForecast) => hourlyForecast
 	},
 	WeatherAlert: {
-		time: ({ time, timezone }) => formatUnixTime(time, timezone),
-		expires: ({ expires, timezone }) => formatUnixTime(expires, timezone),
+		time: ({ time }) => formatUnixTime(time),
+		expires: ({ expires }) => formatUnixTime(expires),
 		url: ({ uri }) => uri
 	}
 };
