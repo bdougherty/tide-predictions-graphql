@@ -3,16 +3,16 @@ enum WeatherForecastUnits {
 	"Automatically select units based on geographic location."
 	auto
 
-	"Imperial units (℉, mph)."
+	"Imperial units (℉, miles, mph)."
 	us
 
-	"SI units (℃, m/s)."
+	"SI units (℃, km, m/s)."
 	si
 
-	"Same as si, except that `wind.speed` is in kilometers per hour."
+	"Canadian units (℃, km, km/h)."
 	ca
 
-	"Same as si, except that `visibility` is in miles and `wind.speed` is in miles per hour."
+	"UK units (℃, miles, mph)."
 	uk2
 }
 
