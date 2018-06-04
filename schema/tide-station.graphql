@@ -133,8 +133,8 @@ type TideStation {
 
 type Query {
 	"Get information on an individual tide station."
-	station(id: ID!): TideStation
+	tideStation(id: ID!): TideStation
 
 	"Get a list of tide stations near a given coordinate."
-	stations(coordinate: Coordinate!, limit: Int = 1): [TideStation]
+	tideStations(coordinate: Coordinate!, limit: Int = 1): [TideStation]
 }

@@ -12,11 +12,11 @@ const appName = process.env.APPLICATION;
 
 export default {
 	Query: {
-		station: async (obj, { id }) => {
+		tideStation: async (obj, { id }) => {
 			const stations = await fetchTideStations();
 			return stations.get(id);
 		},
-		stations: async (obj, { coordinate, limit }) => {
+		tideStations: async (obj, { coordinate, limit }) => {
 			const stations = await fetchTideStations();
 			const stationsWithDistances = getStationsByDistance(stations, coordinate);
 			return stationsWithDistances.slice(0, limit);
