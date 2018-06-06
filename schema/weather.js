@@ -61,7 +61,12 @@ export default {
 		speed: ({ windSpeed }) => windSpeed,
 		gust: ({ windGust }) => windGust,
 		bearing: ({ windBearing }) => windBearing,
-		direction: ({ windBearing }) => bearingToCardinalDirection(windBearing)
+		direction: ({ windBearing }) => {
+			// Dark Sky returns the direction that the wind is coming _from_.
+			// We want to use the direction that it is blowing _towards_.
+			const opposingBearing = (windBearing + 180) % 360;
+			return bearingToCardinalDirection(opposingBearing);
+		}
 	},
 	HourlyForecast: {
 		time: ({ time }) => formatUnixTime(time),
