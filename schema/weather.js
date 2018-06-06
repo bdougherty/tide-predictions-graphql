@@ -9,7 +9,7 @@ import {
 export default {
 	WeatherIcon: {
 		/* eslint-disable camelcase */
-		clear_day: 'clear_day',
+		clear_day: 'clear-day',
 		clear_night: 'clear-night',
 		rain: 'rain',
 		snow: 'snow',

@@ -129,7 +129,7 @@ type HourlyForecast {
 	time: DateTime!
 
 	"A machine-readable text summary of this data point, suitable for selecting an icon for display."
-	icon: WeatherIcon!
+	icon: String!
 
 	"A human-readable text summary of this data point."
 	summary: String!
@@ -222,7 +222,7 @@ type WeatherForecast {
 	units: WeatherForecastUnits!
 
 	"A machine-readable text summary of this data point, suitable for selecting an icon for display."
-	icon: WeatherIcon!
+	icon: String!
 
 	"A human-readable text summary of this data point."
 	summary: String!
