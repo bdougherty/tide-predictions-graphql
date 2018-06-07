@@ -40,7 +40,12 @@ export default {
 			return calculateDistance(fromPoint, toPoint, units);
 		},
 		temperature: (site, { unit = 'F' }) => {
+			const { noDataValue } = site.variable;
 			const temperatureInCelsius = parseFloat(site.values[0].value[0].value);
+
+			if (noDataValue === temperatureInCelsius) {
+				return null;
+			}
 
 			if (unit === 'F') {
 				const temperatureInFahrenheit = convertCelsiusToFahrenheit(temperatureInCelsius);
