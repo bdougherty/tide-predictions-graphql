@@ -1,6 +1,6 @@
 import stateNamesToAbbreviations from 'datasets-us-states-names-abbr';
 import { forwardGeocode, reverseGeocode, getCityName, formatAddress } from '../lib/location';
-import { fetchTideStations, getStationsByDistance } from '../lib/tide-station';
+import { getTideStationsNear } from '../lib/tide-station';
 import { getWaterTemperaturesNear } from '../lib/water-temperature';
 import { fetchWeatherForecast } from '../lib/weather';
 
@@ -27,14 +27,7 @@ export default {
 		zipCode: (location) => location.address.postcode,
 		country: (location) => location.address.country,
 		countryCode: (location) => location.address.country_code.toUpperCase(),
-		tideStations: async (location, { limit }) => {
-			const stations = await fetchTideStations();
-			const stationsWithDistances = getStationsByDistance(stations, {
-				lat: parseFloat(location.lat),
-				lon: parseFloat(location.lon)
-			});
-			return stationsWithDistances.slice(0, limit);
-		},
+		tideStations: async (location, { limit, maxDistance }) => getTideStationsNear(location, limit, maxDistance),
 		waterTemperatures: async (location, { limit }) => {
 			const near = {
 				lat: parseFloat(location.lat),

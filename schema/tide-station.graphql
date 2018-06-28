@@ -100,12 +100,6 @@ type TideStation {
 	"The longitude of the station."
 	lon: Longitude!
 
-	"The two-letter state code."
-	state: String!
-
-	"The NOAA region that the station is in."
-	region: String!
-
 	"The local time zone of the station."
 	timeZone(format: TimeZoneFormat = name): String!
 
@@ -116,7 +110,7 @@ type TideStation {
 	url: String!
 
 	"The URL for the tide prediction page of the station."
-	tidesUrl: String!
+	predictionsUrl: String!
 
 	"Get the distance between this station and a coordinate."
 	distance(from: Coordinate, units: DistanceUnit): Float!
@@ -136,5 +130,9 @@ type Query {
 	tideStation(id: ID!): TideStation
 
 	"Get a list of tide stations near a given coordinate."
-	tideStations(coordinate: Coordinate!, limit: Int = 1): [TideStation]
+	tideStations(
+		coordinate: Coordinate!,
+		limit: Int = 1,
+		maxDistance: Float = 15
+	): [TideStation]
 }
