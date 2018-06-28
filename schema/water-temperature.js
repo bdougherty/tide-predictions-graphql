@@ -1,11 +1,9 @@
-import geoTz from 'geo-tz';
 import * as tc from 'timezonecomplete';
 import calculateDistance from '../lib/distance';
 import { formatTimeZone } from '../lib/time';
 import {
 	getWaterTemperature,
 	getWaterTemperaturesNear,
-	orderSitesByDistance,
 	convertCelsiusToFahrenheit,
 	truncateFloat
 } from '../lib/water-temperature';
@@ -13,58 +11,39 @@ import {
 export default {
 	Query: {
 		waterTemperature: async (obj, { id }) => getWaterTemperature(id),
-		waterTemperatures: async (obj, { coordinate, limit }) => {
-			const sites = await getWaterTemperaturesNear(coordinate);
-			const sitesByDistance = orderSitesByDistance(sites, coordinate);
-			return sitesByDistance.slice(0, limit);
-		}
+		waterTemperatures: async (obj, { coordinate, limit }) => getWaterTemperaturesNear(coordinate, limit)
 	},
 	WaterTemperatureSite: {
-		id: (site) => site.sourceInfo.siteCode[0].value,
-		name: (site) => site.sourceInfo.siteName,
-		url: (site) => `https://waterdata.usgs.gov/nwis/uv?site_no=${site.sourceInfo.siteCode[0].value}`,
-		lat: (site) => site.sourceInfo.geoLocation.geogLocation.latitude,
-		lon: (site) => site.sourceInfo.geoLocation.geogLocation.longitude,
-		distance: (site, { from, units }) => {
-			if (!from && site.distance) {
-				return site.distance;
+		distance: (station, { from, units }) => {
+			if (!from && station.distance) {
+				return station.distance;
 			}
 
 			if (!from) {
 				throw new Error('Must provide from to calculate distance.');
 			}
 
-			const { latitude, longitude } = site.sourceInfo.geoLocation.geogLocation;
-			const fromPoint = [latitude, longitude];
+			const fromPoint = [station.lat, station.lon];
 			const toPoint = [from.lat, from.lon];
 			return calculateDistance(fromPoint, toPoint, units);
 		},
-		temperature: (site, { unit = 'F' }) => {
-			const { noDataValue } = site.variable;
-			const temperatureInCelsius = parseFloat(site.values[0].value[0].value);
-
-			if (noDataValue === temperatureInCelsius) {
+		temperature: (station, { unit = 'F' }) => {
+			if (station.temperature === null) {
 				return null;
 			}
 
 			if (unit === 'F') {
-				const temperatureInFahrenheit = convertCelsiusToFahrenheit(temperatureInCelsius);
+				const temperatureInFahrenheit = convertCelsiusToFahrenheit(station.temperature);
 				return truncateFloat(temperatureInFahrenheit, 1);
 			}
 
-			return truncateFloat(temperatureInCelsius, 1);
+			return truncateFloat(station.temperature, 1);
 		},
-		time: (site) => {
-			const { latitude, longitude } = site.sourceInfo.geoLocation.geogLocation;
-			const zoneName = geoTz(latitude, longitude);
-			const zone = tc.zone(zoneName);
-			const date = new tc.DateTime(site.values[0].value[0].dateTime, zone);
-
-			return date.toZone(tc.utc()).toIsoString();
+		time: (station) => {
+			return station.time.toZone(tc.utc()).toIsoString();
 		},
-		timeZone: (site, { format = 'name' }) => {
-			const { latitude, longitude } = site.sourceInfo.geoLocation.geogLocation;
-			const coordinate = [latitude, longitude];
+		timeZone: (station, { format = 'name' }) => {
+			const coordinate = [station.lat, station.lon];
 			return formatTimeZone(coordinate, format);
 		}
 	}
