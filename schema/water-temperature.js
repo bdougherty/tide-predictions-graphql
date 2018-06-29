@@ -1,5 +1,8 @@
 import * as tc from 'timezonecomplete';
-import calculateDistance from '../lib/distance';
+import {
+	calculateDistance,
+	convert
+} from '../lib/distance';
 import { formatTimeZone } from '../lib/time';
 import {
 	getWaterTemperature,
@@ -16,7 +19,7 @@ export default {
 	WaterTemperatureSite: {
 		distance: (station, { from, units }) => {
 			if (!from && station.distance) {
-				return station.distance;
+				return convert(station.distance, 'km', units);
 			}
 
 			if (!from) {
@@ -25,7 +28,8 @@ export default {
 
 			const fromPoint = [station.lat, station.lon];
 			const toPoint = [from.lat, from.lon];
-			return calculateDistance(fromPoint, toPoint, units);
+			const distance = calculateDistance(fromPoint, toPoint);
+			return convert(distance, 'km', units);
 		},
 		temperature: (station, { unit = 'F' }) => {
 			if (station.temperature === null) {

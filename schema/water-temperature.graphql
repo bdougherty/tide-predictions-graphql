@@ -34,7 +34,7 @@ type WaterTemperatureSite {
 	temperature(unit: WaterTemperatureUnit): Float
 
 	"Get the distance between this site and a coordinate."
-	distance(from: Coordinate, units: DistanceUnit): Float!
+	distance(from: Coordinate, units: DistanceUnit = nmi): Float!
 }
 
 type Query {

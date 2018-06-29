@@ -77,7 +77,10 @@ type TidePrediction {
 	type: PredictionType!
 
 	"The predicted height of the tide."
-	height: Float!
+	height(
+		"Units to use for the height for each prediction."
+		units: PredictionUnit = m
+	): Float!
 
 	"The predicted time for the tide, as an ISO 8601 time string."
 	time: DateTime!
@@ -113,15 +116,12 @@ type TideStation {
 	predictionsUrl: String!
 
 	"Get the distance between this station and a coordinate."
-	distance(from: Coordinate, units: DistanceUnit): Float!
+	distance(from: Coordinate, units: DistanceUnit = nmi): Float!
 
 	"An array of upcoming tide predictions for this station."
 	predictions(
 		days: Int = 2,
-		datum: PredictionDatum = MLLW,
-
-		"Units to use for the height for each prediction."
-		units: PredictionUnit
+		datum: PredictionDatum = MLLW
 	): [TidePrediction]
 }
 

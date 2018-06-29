@@ -1,5 +1,8 @@
 import * as tc from 'timezonecomplete';
-import calculateDistance from '../lib/distance';
+import {
+	calculateDistance,
+	convert
+} from '../lib/distance';
 import { formatTimeZone } from '../lib/time';
 import {
 	getTideStation,
@@ -19,14 +22,10 @@ export default {
 		high: 'H',
 		low: 'L'
 	},
-	PredictionUnit: {
-		ft: 'english',
-		m: 'metric'
-	},
 	TideStation: {
 		distance: (station, { from, units }) => {
 			if (!from && station.distance) {
-				return station.distance;
+				return convert(station.distance, 'km', units);
 			}
 
 			if (!from) {
@@ -35,15 +34,20 @@ export default {
 
 			const fromPoint = [station.lat, station.lon];
 			const toPoint = [from.lat, from.lon];
-			return calculateDistance(fromPoint, toPoint, units);
+			const distance = calculateDistance(fromPoint, toPoint);
+			return convert(distance, 'km', units);
 		},
 		timeZone: (station, { format = 'name' }) => {
 			const coordinate = [station.lat, station.lon];
 			return formatTimeZone(coordinate, format);
 		},
-		predictions: async (station, { days, datum, units }) => station.getPredictions({ days, datum, units })
+		predictions: async (station, { days, datum }) => station.getPredictions({ days, datum })
 	},
 	TidePrediction: {
-		time: ({ time }) => time.toZone(tc.utc()).toIsoString()
+		time: ({ time }) => time.toZone(tc.utc()).toIsoString(),
+		height: ({ height }, { units }) => {
+			const converted = convert(height, 'm', units);
+			return parseFloat(converted.toFixed(3));
+		}
 	}
 };
