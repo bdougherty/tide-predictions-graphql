@@ -34,10 +34,7 @@ type Location {
 	countryCode: String
 
 	"Get tide predictions near this location."
-	tideStations(
-		limit: Int = 1,
-		maxDistance: Float = 15
-	): [TideStation]
+	tideStations(limit: Int = 1): [TideStation]
 
 	"Get the water temperatures from sites near this location."
 	waterTemperatures(limit: Int = 1): [WaterTemperatureSite]

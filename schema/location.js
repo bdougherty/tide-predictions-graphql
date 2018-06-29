@@ -27,7 +27,7 @@ export default {
 		zipCode: (location) => location.address.postcode,
 		country: (location) => location.address.country,
 		countryCode: (location) => location.address.country_code.toUpperCase(),
-		tideStations: async (location, { limit, maxDistance }) => getTideStationsNear(location, limit, maxDistance),
+		tideStations: async (location, { limit }) => getTideStationsNear(location, limit),
 		waterTemperatures: async (location, { limit }) => {
 			const near = {
 				lat: parseFloat(location.lat),
