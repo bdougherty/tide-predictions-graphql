@@ -78,7 +78,7 @@ export class NOAATideStation extends TideStation {
 	}
 
 	get url() {
-		return `https://tidesandcurrents.noaa.gov/stationhome.html?id=${this.data.stationId}`
+		return `https://tidesandcurrents.noaa.gov/stationhome.html?id=${this.data.stationId}`;
 	}
 
 	get predictionsUrl() {
