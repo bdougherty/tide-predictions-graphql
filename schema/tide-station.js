@@ -9,7 +9,7 @@ import {
 export default {
 	Query: {
 		tideStation: async (obj, { id }) => getTideStation(id),
-		tideStations: async (obj, { coordinate, limit, maxDistance }) => getTideStationsNear(coordinate, limit, maxDistance)
+		tideStations: async (obj, { coordinate, limit }) => getTideStationsNear(coordinate, limit)
 	},
 	StationType: {
 		harmonic: 'R',

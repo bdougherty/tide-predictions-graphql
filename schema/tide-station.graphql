@@ -132,7 +132,6 @@ type Query {
 	"Get a list of tide stations near a given coordinate."
 	tideStations(
 		coordinate: Coordinate!,
-		limit: Int = 1,
-		maxDistance: Float = 15
+		limit: Int = 1
 	): [TideStation]
 }
