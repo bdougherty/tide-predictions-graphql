@@ -31,7 +31,7 @@ type WaterTemperatureSite {
 	timeZone(format: TimeZoneFormat): String!
 
 	"The current temperature recorded at the site."
-	temperature(unit: WaterTemperatureUnit): Float
+	temperature(unit: WaterTemperatureUnit = F): Float
 
 	"Get the distance between this site and a coordinate."
 	distance(from: Coordinate, units: DistanceUnit = nmi): Float!
