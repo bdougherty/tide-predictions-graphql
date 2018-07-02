@@ -1,7 +1,5 @@
 import { send } from 'micro';
-import compress from 'micro-compress';
-import microCors from 'micro-cors';
-import dispatch from 'micro-route/dispatch';
+import route from 'micro-route';
 import { microGraphiql, microGraphql } from 'apollo-server-micro';
 import schema from './schema';
 
@@ -13,22 +11,40 @@ if (!process.env.ACCESS_CONTROL_ALLOW_ORIGIN) {
 	throw new Error('Must set ACCESS_CONTROL_ALLOW_ORIGIN environment variable.');
 }
 
-const cors = microCors({
-	allowMethods: ['GET', 'POST'],
-	allowHeaders: ['X-Requested-With', 'Content-Type', 'Accept'],
-	origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN
-});
-
 const graphqlHandler = microGraphql({ schema });
-let dispatcher = dispatch('/graphql', ['GET', 'POST'], graphqlHandler);
+const graphiqlHandler = microGraphiql({ endpointURL: '/graphql' });
 
-if (process.env.ENABLE_GRAPHIQL) {
-	const graphiqlHandler = microGraphiql({ endpointURL: '/graphql' });
-	dispatcher = dispatcher.dispatch('/graphiql', ['GET'], graphiqlHandler);
-}
+const corsRoute = route('*', 'OPTIONS');
+const graphqlRoute = route('/graphql', ['GET', 'POST']);
+const graphiqlRoute = route('/graphiql', 'GET');
 
-dispatcher = dispatcher.otherwise((req, res) => {
+export default (req, res) => {
+	if (corsRoute(req)) {
+		const originEnv = process.env.ACCESS_CONTROL_ALLOW_ORIGIN;
+		const allowedOrigins = originEnv.split(',');
+		const { origin } = req.headers;
+
+		res.setHeader('Access-Control-Allow-Methods', ['GET', 'POST'].join(','));
+		res.setHeader('Access-Control-Allow-Headers', ['X-Requested-With', 'Content-Type', 'Accept'].join(','));
+
+		if (originEnv === '*') {
+			res.setHeader('Access-Control-Allow-Origin', '*');
+		}
+
+		if (allowedOrigins.indexOf(origin) !== -1) {
+			res.setHeader('Access-Control-Allow-Origin', origin);
+		}
+
+		return '';
+	}
+
+	if (graphqlRoute(req)) {
+		return graphqlHandler(req, res);
+	}
+
+	if (process.env.ENABLE_GRAPHIQL && graphiqlRoute(req)) {
+		return graphiqlHandler(req, res);
+	}
+
 	send(res, 404, 'Not Found');
-});
-
-export default cors(compress(dispatcher));
+};
