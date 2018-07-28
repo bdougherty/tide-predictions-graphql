@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "micro",
-    "dev": "node --inspect=127.0.0.1:9231 node_modules/.bin/micro-dev -p 3002",
+    "dev": "node --inspect node_modules/.bin/micro-dev -p 3002",
     "test": "xo && nyc ava"
   },
   "dependencies": {
