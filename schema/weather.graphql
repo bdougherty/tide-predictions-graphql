@@ -264,7 +264,7 @@ type WeatherForecast {
 	hourly: [HourlyForecast]
 
 	"Severe weather warnings issued for the requested location by a governmental authority."
-	alerts: [WeatherAlert!]
+	alerts: [WeatherAlert!]!
 }
 
 type Query {

@@ -45,7 +45,8 @@ export default {
 		cloudCover: (forecast) => forecast.currently.cloudCover,
 		uvIndex: ({ currently }) => currently,
 		ozone: (forecast) => forecast.currently.ozone,
-		hourly: (forecast) => forecast.hourly.data
+		hourly: (forecast) => forecast.hourly.data,
+		alerts: (forecast) => forecast.alerts || []
 	},
 	Precipitation: {
 		probability: ({ precipProbability = 0 }) => precipProbability,
