@@ -4,6 +4,13 @@ enum GeocodingProvider {
 	GeoNames
 }
 
+"The provider to use for IP lookups."
+enum IPLookupProvider {
+	IPStack
+	IPAPI
+	ipdata
+}
+
 "A coordinate and its associated address."
 type Location {
 	"The latitude of the location."
@@ -70,4 +77,7 @@ type Query {
 		query: Coordinate!,
 		provider: GeocodingProvider = OpenStreetMap
 	): Location
+
+	"Look up the location from an IP address."
+	ipLookup(ip: String!, provider: IPLookupProvider = IPAPI): Location
 }

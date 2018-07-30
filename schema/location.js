@@ -1,7 +1,10 @@
 import {
 	openStreetMapforwardGeocode,
 	geoNamesForwardGeocode,
-	openStreetMapReverseGeocode
+	openStreetMapReverseGeocode,
+	ipstackIPLookup,
+	ipapiIPLookup,
+	ipdataIPLookup
 } from '../lib/location';
 import { getTideStationsNear } from '../lib/tide-station';
 import { getWaterTemperaturesNear } from '../lib/water-temperature';
@@ -20,6 +23,18 @@ export default {
 		reverseGeocode: async (obj, { query }) => {
 			const locations = await openStreetMapReverseGeocode(query);
 			return locations;
+		},
+		ipLookup: async (obj, { ip, provider }) => {
+			switch (provider) {
+				case 'IPStack':
+					return ipstackIPLookup(ip);
+
+				case 'ipdata':
+					return ipdataIPLookup(ip);
+
+				default:
+					return ipapiIPLookup(ip);
+			}
 		}
 	},
 	Location: {

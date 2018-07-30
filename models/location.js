@@ -153,3 +153,105 @@ export class OpenStreetMapLocation extends Location {
 		return this.data.address.country_code.toUpperCase();
 	}
 }
+
+export class IPAPILocation extends Location {
+	get lat() {
+		return parseFloat(this.data.lat);
+	}
+
+	get lon() {
+		return parseFloat(this.data.lon);
+	}
+
+	get city() {
+		return this.data.city;
+	}
+
+	get state() {
+		return this.data.regionName;
+	}
+
+	get stateCode() {
+		return this.data.region;
+	}
+
+	get postalCode() {
+		return this.data.zip;
+	}
+
+	get country() {
+		return this.data.country;
+	}
+
+	get countryCode() {
+		return this.data.countryCode;
+	}
+}
+
+export class IPDataLocation extends Location {
+	get lat() {
+		return this.data.latitude;
+	}
+
+	get lon() {
+		return this.data.longitude;
+	}
+
+	get city() {
+		return this.data.city;
+	}
+
+	get state() {
+		return this.data.region;
+	}
+
+	get stateCode() {
+		return this.data.region_code;
+	}
+
+	get postalCode() {
+		return this.data.postal;
+	}
+
+	get country() {
+		return this.data.country_name;
+	}
+
+	get countryCode() {
+		return this.data.country_code;
+	}
+}
+
+export class IPStackLocation extends Location {
+	get lat() {
+		return this.data.latitude;
+	}
+
+	get lon() {
+		return this.data.longitude;
+	}
+
+	get city() {
+		return this.data.city;
+	}
+
+	get state() {
+		return this.data.region_name;
+	}
+
+	get stateCode() {
+		return this.data.region_code;
+	}
+
+	get postalCode() {
+		return this.data.zip;
+	}
+
+	get country() {
+		return this.data.country_name;
+	}
+
+	get countryCode() {
+		return this.data.country_code;
+	}
+}
