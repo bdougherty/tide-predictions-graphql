@@ -1,14 +1,15 @@
 import test from 'ava';
-import { formatAddress } from './location';
+import { OpenStreetMapLocation } from './location';
 
-function address(t, input, expected) {
-	t.is(formatAddress(input), expected);
+function name(t, input, expected) {
+	const location = new OpenStreetMapLocation(input);
+	t.is(location.name, expected);
 }
 
-address.title = (providedTitle, input) => `Properly formats ”${input.display_name}“`;
+name.title = (providedTitle, input) => `Properly formats ”${input.display_name}“`;
 
 /* eslint-disable camelcase */
-test(address, {
+test(name, {
 	display_name: 'Hawaii, United States of America',
 	category: 'boundary',
 	type: 'administrative',
@@ -19,7 +20,7 @@ test(address, {
 	}
 }, 'Hawaii, United States of America');
 
-test(address, {
+test(name, {
 	display_name: 'Ventnor City, Atlantic County, New Jersey, 08406, United States of America',
 	category: 'place',
 	type: 'city',
@@ -33,7 +34,7 @@ test(address, {
 	}
 }, 'Ventnor City, NJ');
 
-test(address, {
+test(name, {
 	display_name: 'Guam, United States of America',
 	category: 'boundary',
 	type: 'administrative',
@@ -44,7 +45,7 @@ test(address, {
 	}
 }, 'Guam, United States of America');
 
-test(address, {
+test(name, {
 	display_name: 'Weno, Chuuk, Micronesia',
 	category: 'place',
 	type: 'island',

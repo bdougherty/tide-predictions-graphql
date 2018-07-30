@@ -1,3 +1,9 @@
+"The provider to use for forward and reverse geocoding."
+enum GeocodingProvider {
+	OpenStreetMap
+	GeoNames
+}
+
 "A coordinate and its associated address."
 type Location {
 	"The latitude of the location."
@@ -25,7 +31,7 @@ type Location {
 	stateCode: String
 
 	"The postal code."
-	zipCode: String
+	postalCode: String
 
 	"The full country name."
 	country: String
@@ -53,11 +59,15 @@ type Query {
 	geocode(
 		query: String!,
 		limit: Int = 1,
+		provider: GeocodingProvider = OpenStreetMap,
 
 		"List of country codes used to give more relevant results."
 		countryCodes: [String]
 	): [Location]
 
 	"Look up the location from a coordinate."
-	reverseGeocode(query: Coordinate!): Location
+	reverseGeocode(
+		query: Coordinate!,
+		provider: GeocodingProvider = OpenStreetMap
+	): Location
 }
