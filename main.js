@@ -2,6 +2,7 @@ import { send } from 'micro';
 import route from 'micro-route';
 import { microGraphiql, microGraphql } from 'apollo-server-micro';
 import schema from './schema';
+import { isAllowedOrigin } from './lib/origin';
 
 if (!process.env.APPLICATION) {
 	throw new Error('Must provide APPLICATION environment variable.');
@@ -30,8 +31,7 @@ const setCorsHeaders = (req, res) => {
 	if (originEnv === '*') {
 		res.setHeader('Access-Control-Allow-Origin', '*');
 	}
-
-	if (allowedOrigins.indexOf(origin) !== -1) {
+	else if (isAllowedOrigin(origin, allowedOrigins)) {
 		res.setHeader('Access-Control-Allow-Origin', origin);
 	}
 };
