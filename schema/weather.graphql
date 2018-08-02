@@ -170,13 +170,13 @@ type HourlyForecast {
 
 "The severity of a weather alert."
 enum WeatherAlertSeverity {
-	"an individual should be aware of potentially severe weather"
+	"An individual should be aware of potentially severe weather."
 	advisory
 
-	"an individual should prepare for potentially severe weather"
+	"An individual should prepare for potentially severe weather."
 	watch
 
-	"an individual should take immediate action to protect themselves and others from potentially severe weather"
+	"An individual should take immediate action to protect themselves and others from potentially severe weather."
 	warning
 }
 
