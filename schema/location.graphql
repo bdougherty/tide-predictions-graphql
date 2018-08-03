@@ -46,6 +46,9 @@ type Location {
 	"The ISO 3166 country code."
 	countryCode: String
 
+	"Get astronomical observations for this location."
+	astronomicalObservations: AstronomicalObservations!
+
 	"Get tide predictions near this location."
 	tideStations(limit: Int = 1): [TideStation]
 

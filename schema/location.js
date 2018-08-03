@@ -9,6 +9,7 @@ import {
 import { getTideStationsNear } from '../lib/tide-station';
 import { getWaterTemperaturesNear } from '../lib/water-temperature';
 import { fetchWeatherForecast } from '../lib/weather';
+import { getObservations } from '../lib/astronomy';
 
 export default {
 	Query: {
@@ -38,6 +39,7 @@ export default {
 		}
 	},
 	Location: {
+		astronomicalObservations: (location) => getObservations(location),
 		tideStations: async (location, { limit }) => getTideStationsNear(location, limit),
 		waterTemperatures: async (location, { limit }) => {
 			const near = {

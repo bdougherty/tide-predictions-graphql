@@ -1,0 +1,113 @@
+"The name of a moon phase."
+enum MoonPhase {
+	new
+	waxingCrescent
+	firstQuarter
+	waxingGibbous
+	full
+	waningGibbous
+	lastQuarter
+	waningCrescent
+}
+
+"A unit for measuring celestial distance."
+enum CelestialDistance {
+	"Kilometers"
+	km
+
+	"Astronomical units"
+	AU
+}
+
+"Observations of a celestial object at a specific time."
+type CelestialObjectObservation {
+	"The time of the observation."
+	time: DateTime!
+
+	"The angle, in degrees, of a celestial object measured upwards from the observer’s horizon."
+	altitude: Float!
+
+	"This is the direction, in degrees, of a celestial object measured clockwise around the observer’s horizon from north."
+	azimuth: Float!
+
+	"The distance of the celestial object from the observer."
+	distance(units: CelestialDistance = km): Float
+}
+
+"Observations about the sun."
+type SunObservations {
+	"Current observations of the sun."
+	current: CelestialObjectObservation!
+
+	"The time when morning astronomical twilight begins."
+	nightEnd: CelestialObjectObservation!
+
+	"The time when morning astronomical twilight ends and nautical twilight begins."
+	nauticalDawn: CelestialObjectObservation!
+
+	"The time when morning nautical twilight ends and civil twilight begins."
+	dawn: CelestialObjectObservation!
+
+	"The time when the top edge of the sun appears above the horizon."
+	rise: CelestialObjectObservation!
+
+	"The time when the sun is at its highest altitude above the horizon."
+	maximumAltitude: CelestialObjectObservation!
+
+	"The time when the sun disappears below the horizon and evening civil twilight begins."
+	set: CelestialObjectObservation!
+
+	"The time when evening civil twilight ends and evening nautical twilight begins."
+	dusk: CelestialObjectObservation!
+
+	"The time when evening nautical twilight ends and astronomical twilight begins."
+	nauticalDusk: CelestialObjectObservation!
+
+	"The time when evening astronomical twilight ends."
+	night: CelestialObjectObservation!
+}
+
+"Observations about the moon."
+type MoonObservations {
+	"The illuminated fraction of the moon from `0.0` (new moon) to `1.0` (full moon)."
+	illumination: Float!
+
+	"The current phase of the moon."
+	phase: MoonPhase!
+
+	"An emoji representing the current moon phase."
+	emoji: String!
+
+	"Current observations of the moon."
+	current: CelestialObjectObservation!
+
+	"Observations when the moon rises."
+	rise: CelestialObjectObservation!
+
+	"Observations when the moon sets."
+	set: CelestialObjectObservation!
+}
+
+type AstronomicalObservations {
+	"The latitude where observed."
+	lat: Latitude!
+
+	"The longitude where observed."
+	lon: Longitude!
+
+	"The time of the observations."
+	time: DateTime!
+
+	"Sun observations."
+	sun: SunObservations!
+
+	"Moon observations."
+	moon: MoonObservations!
+}
+
+type Query {
+	"Get astronomical observations for a coordinate."
+	astronomicalObservations(
+		coordinate: Coordinate
+	): AstronomicalObservations
+}
