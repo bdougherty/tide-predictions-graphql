@@ -41,9 +41,17 @@ export default {
 			const coordinate = [station.lat, station.lon];
 			return formatTimeZone(coordinate, format);
 		},
-		predictions: async (station, { days, datum }) => station.getPredictions({ days, datum })
+		predictions: async (station, { days, datum }) => station.getPredictions({ days, datum }),
+		hourlyPredictions: async (station, { days, datum }) => station.getPredictions({ days, datum, interval: 'h' })
 	},
 	TidePrediction: {
+		time: ({ time }) => time.toZone(tc.utc()).toIsoString(),
+		height: ({ height }, { units }) => {
+			const converted = convert(height, 'm', units);
+			return parseFloat(converted.toFixed(3));
+		}
+	},
+	WaterLevelPrediction: {
 		time: ({ time }) => time.toZone(tc.utc()).toIsoString(),
 		height: ({ height }, { units }) => {
 			const converted = convert(height, 'm', units);

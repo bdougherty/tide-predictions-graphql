@@ -4,7 +4,7 @@ import {
 	fetchPredictionsForTideStation,
 	formatTideStationName
 } from '../lib/tide-station';
-import { TidePrediction } from './tide-prediction';
+import { TidePrediction, WaterLevelPrediction } from './tide-prediction';
 
 export class TideStation {
 	constructor(data) {
@@ -85,15 +85,22 @@ export class NOAATideStation extends TideStation {
 		return `https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${this.data.stationId}`;
 	}
 
-	async getPredictions({ days, datum, units }) {
+	async getPredictions({ days, datum, units, interval }) {
 		const zoneName = geoTz(this.lat, this.lon);
 
 		const appName = process.env.APPLICATION;
-		const predictions = await fetchPredictionsForTideStation(this.data, { days, datum, units, appName });
+		const predictions = await fetchPredictionsForTideStation(this.data, { days, datum, units, interval, appName });
 
 		return predictions.map(({ t, v, type }) => {
 			const timeZone = tc.zone(zoneName);
 			const date = new tc.DateTime(t, 'yyyy-MM-dd HH:mm', timeZone);
+
+			if (interval === 'h') {
+				return new WaterLevelPrediction({
+					height: v,
+					time: date
+				});
+			}
 
 			return new TidePrediction({
 				type,

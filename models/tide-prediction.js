@@ -1,10 +1,6 @@
-export class TidePrediction {
+class Prediction {
 	constructor(data) {
 		this.data = data;
-	}
-
-	get type() {
-		return this.data.type;
 	}
 
 	get height() {
@@ -15,3 +11,11 @@ export class TidePrediction {
 		return this.data.time;
 	}
 }
+
+export class TidePrediction extends Prediction {
+	get type() {
+		return this.data.type;
+	}
+}
+
+export class WaterLevelPrediction extends Prediction {}

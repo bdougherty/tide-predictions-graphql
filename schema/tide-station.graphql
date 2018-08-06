@@ -71,18 +71,30 @@ enum PredictionUnit {
 	m
 }
 
-"A prediction for future tide levels."
+"A prediction for future high and low tides."
 type TidePrediction {
 	"The type of tide, either `high` or `low`."
 	type: PredictionType!
 
 	"The predicted height of the tide."
 	height(
-		"Units to use for the height for each prediction."
+		"Units to use for the height of the prediction."
 		units: PredictionUnit = m
 	): Float!
 
-	"The predicted time for the tide, as an ISO 8601 time string."
+	"The predicted time for the tide."
+	time: DateTime!
+}
+
+"A prediction for future water level."
+type WaterLevelPrediction {
+	"The predicted height of the water level."
+	height(
+		"Units to use for the height of the prediction."
+		units: PredictionUnit = m
+	): Float!
+
+	"The time for the predicted water level."
 	time: DateTime!
 }
 
@@ -118,11 +130,17 @@ type TideStation {
 	"Get the distance between this station and a coordinate."
 	distance(from: Coordinate, units: DistanceUnit = nmi): Float!
 
-	"An array of upcoming tide predictions for this station."
+	"An array of upcoming high and low tide predictions for this station."
 	predictions(
 		days: Int = 2,
 		datum: PredictionDatum = MLLW
 	): [TidePrediction]
+
+	"An array of hourly water level predictions for this station."
+	hourlyPredictions(
+		days: Int = 2,
+		datum: PredictionDatum = MLLW
+	): [WaterLevelPrediction]
 }
 
 type Query {
