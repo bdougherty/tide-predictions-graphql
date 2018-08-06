@@ -4,7 +4,7 @@ import { convert } from '../lib/distance';
 
 export default {
 	Query: {
-		astronomicalObservations: (obj, { coordinate }) => getObservations(coordinate)
+		astronomicalObservations: (obj, { coordinate, time }) => getObservations(coordinate, time)
 	},
 	AstronomicalObservations: {
 		time: ({ date }) => date
@@ -28,7 +28,7 @@ export default {
 		current: ({ lat, lon, date }) => getMoonPosition(date, lat, lon),
 		rise: ({ lat, lon, rise: date }) => getMoonPosition(date, lat, lon),
 		set: ({ lat, lon, set: date }) => getMoonPosition(date, lat, lon),
-		phases: async (_, { limit }) => getUpcomingMoonPhases(limit)
+		phases: async ({ date }, { limit }) => getUpcomingMoonPhases(date, limit)
 	},
 	CelestialObjectObservation: {
 		altitude: ({ altitude }) => altitude * (180 / Math.PI),
