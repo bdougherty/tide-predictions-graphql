@@ -67,6 +67,14 @@ type SunObservations {
 	night: CelestialObjectObservation!
 }
 
+type PrimaryMoonPhase {
+	"The time that the phase occurs."
+	time: DateTime!
+
+	"The name of a moon phase."
+	phase: MoonPhase!
+}
+
 "Observations about the moon."
 type MoonObservations {
 	"The illuminated fraction of the moon from `0.0` (new moon) to `1.0` (full moon)."
@@ -86,6 +94,9 @@ type MoonObservations {
 
 	"Observations when the moon sets."
 	set: CelestialObjectObservation!
+
+	"Get a list of future primary moon phases."
+	phases(limit: Int = 4): [PrimaryMoonPhase]!
 }
 
 type AstronomicalObservations {

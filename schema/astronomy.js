@@ -1,5 +1,5 @@
 import moonmoji from 'moonmoji';
-import { getSunPosition, getMoonPosition, convertMoonPhase, getObservations } from '../lib/astronomy';
+import { getSunPosition, getMoonPosition, convertMoonPhase, getObservations, getUpcomingMoonPhases } from '../lib/astronomy';
 import { convert } from '../lib/distance';
 
 export default {
@@ -27,7 +27,8 @@ export default {
 		emoji: () => moonmoji().emoji,
 		current: ({ lat, lon, date }) => getMoonPosition(date, lat, lon),
 		rise: ({ lat, lon, rise: date }) => getMoonPosition(date, lat, lon),
-		set: ({ lat, lon, set: date }) => getMoonPosition(date, lat, lon)
+		set: ({ lat, lon, set: date }) => getMoonPosition(date, lat, lon),
+		phases: async (_, { limit }) => getUpcomingMoonPhases(limit)
 	},
 	CelestialObjectObservation: {
 		altitude: ({ altitude }) => altitude * (180 / Math.PI),
