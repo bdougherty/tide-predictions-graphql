@@ -27,6 +27,7 @@ const setCorsHeaders = (req, res) => {
 
 	res.setHeader('Access-Control-Allow-Methods', ['GET', 'POST'].join(','));
 	res.setHeader('Access-Control-Allow-Headers', ['X-Requested-With', 'Content-Type', 'Accept'].join(','));
+	res.setHeader('Vary', 'Origin');
 
 	if (originEnv === '*') {
 		res.setHeader('Access-Control-Allow-Origin', '*');
