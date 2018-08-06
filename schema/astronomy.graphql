@@ -119,7 +119,7 @@ type AstronomicalObservations {
 type Query {
 	"Get astronomical observations for a coordinate."
 	astronomicalObservations(
-		coordinate: Coordinate,
+		coordinate: Coordinate!,
 		time: String
 	): AstronomicalObservations
 }
