@@ -31,7 +31,11 @@ const allowedOrigins = originEnv.split(',');
 const apolloServer = new ApolloServer({
 	typeDefs,
 	resolvers,
-	playground: process.env.ENABLE_GRAPHQL_PLAYGROUND,
+	playground: process.env.ENABLE_GRAPHQL_PLAYGROUND === 'true' && {
+		settings: {
+			'editor.theme': 'light'
+		}
+	},
 	engine: {
 		apiKey: process.env.APOLLO_ENGINE
 	},
