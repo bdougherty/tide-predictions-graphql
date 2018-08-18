@@ -1,7 +1,7 @@
 import { send } from 'micro';
 import route from 'micro-route';
-import { microGraphiql, microGraphql } from 'apollo-server-micro';
-import schema from './schema';
+import { ApolloServer } from 'apollo-server-micro';
+import { typeDefs, resolvers } from './schema';
 import { isAllowedOrigin } from './lib/origin';
 
 if (!process.env.APPLICATION) {
@@ -15,12 +15,19 @@ if (!process.env.ACCESS_CONTROL_ALLOW_ORIGIN) {
 const originEnv = process.env.ACCESS_CONTROL_ALLOW_ORIGIN;
 const allowedOrigins = originEnv.split(',');
 
-const graphqlHandler = microGraphql({ schema });
-const graphiqlHandler = microGraphiql({ endpointURL: '/graphql' });
+const apolloServer = new ApolloServer({
+	typeDefs,
+	resolvers,
+	playground: process.env.ENABLE_GRAPHIQL,
+	engine: {
+		apiKey: process.env.APOLLO_ENGINE
+	}
+});
+
+const graphqlHandler = apolloServer.createHandler();
 
 const corsRoute = route('*', 'OPTIONS');
 const graphqlRoute = route('/graphql', ['GET', 'POST']);
-const graphiqlRoute = route('/graphiql', 'GET');
 
 const setCorsHeaders = (req, res) => {
 	const { origin } = req.headers;
@@ -46,10 +53,6 @@ export default (req, res) => {
 	if (graphqlRoute(req)) {
 		setCorsHeaders(req, res);
 		return graphqlHandler(req, res);
-	}
-
-	if (process.env.ENABLE_GRAPHIQL && graphiqlRoute(req)) {
-		return graphiqlHandler(req, res);
 	}
 
 	send(res, 404, 'Not Found');
