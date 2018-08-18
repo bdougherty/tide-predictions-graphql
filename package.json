@@ -16,6 +16,7 @@
     "test": "xo && nyc ava"
   },
   "dependencies": {
+    "@sentry/node": "^4.0.0-beta.12",
     "@turf/bbox": "^6.0.1",
     "@turf/circle": "^6.0.1",
     "@turf/distance": "^6.0.1",
@@ -26,6 +27,7 @@
     "dotenv": "^6.0.0",
     "esm": "^3.0.77",
     "geo-tz": "^4.0.1",
+    "git-rev-sync": "^1.12.0",
     "got": "^9.0.0",
     "graphql": "^0.13.2",
     "graphql-iso-date": "^3.5.0",

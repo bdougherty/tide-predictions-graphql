@@ -1,8 +1,21 @@
 import { send } from 'micro';
 import route from 'micro-route';
 import { ApolloServer } from 'apollo-server-micro';
+import * as Sentry from '@sentry/node';
+import git from 'git-rev-sync';
 import { typeDefs, resolvers } from './schema';
 import { isAllowedOrigin } from './lib/origin';
+
+if (process.env.SENTRY_DSN) {
+	const gitRevision = git.long();
+	const release = process.env.NODE_ENV === 'production' ? gitRevision : 'dev';
+
+	Sentry.init({
+		dsn: process.env.SENTRY_DSN,
+		release,
+		environment: process.env.NODE_ENV
+	});
+}
 
 if (!process.env.APPLICATION) {
 	throw new Error('Must provide APPLICATION environment variable.');
@@ -21,6 +34,10 @@ const apolloServer = new ApolloServer({
 	playground: process.env.ENABLE_GRAPHQL_PLAYGROUND,
 	engine: {
 		apiKey: process.env.APOLLO_ENGINE
+	},
+	formatError(error) {
+		Sentry.captureException(error);
+		return error;
 	}
 });
 
