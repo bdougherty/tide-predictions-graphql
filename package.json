@@ -46,16 +46,6 @@
     "nyc": "^12.0.2",
     "xo": "^0.21.1"
   },
-  "now": {
-    "alias": "tide-predictions-graphql.now.sh",
-    "dotenv": true,
-    "env": [
-      "ACCESS_CONTROL_ALLOW_ORIGIN",
-      "APPLICATION",
-      "ENABLE_GRAPHIQL",
-      "DARK_SKY_API_KEY"
-    ]
-  },
   "ava": {
     "require": [
       "esm"
