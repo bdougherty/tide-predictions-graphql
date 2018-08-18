@@ -35,6 +35,7 @@ const apolloServer = new ApolloServer({
 	engine: {
 		apiKey: process.env.APOLLO_ENGINE
 	},
+	tracing: process.env.NODE_ENV !== 'production',
 	formatError(error) {
 		Sentry.captureException(error);
 		return error;
