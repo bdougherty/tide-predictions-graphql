@@ -21,6 +21,7 @@
     "@turf/circle": "^6.0.1",
     "@turf/distance": "^6.0.1",
     "apollo-server-micro": "^2.2.6",
+    "astronomia": "^2.0.1",
     "better-title-case": "^1.0.1",
     "convert-units": "github:ben-ng/convert-units#389fabc",
     "datasets-us-states-names-abbr": "^1.0.0",
