@@ -1,25 +1,18 @@
 import { GraphQLScalarType } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
-const validateLongitude = (value) => {
+const validateCoordinate = (value, min, max, type) => {
 	value = parseFloat(value);
 
-	if (value > 180 || value < -180) {
-		throw new TypeError('Longitude must be between -180 and 180');
+	if (value > max || value < min) {
+		throw new TypeError(`${type} must be between ${min} and ${max}`);
 	}
 
 	return value;
 };
 
-const validateLatitude = (value) => {
-	value = parseFloat(value);
-
-	if (value > 90 || value < -90) {
-		throw new TypeError('Latitude must be between -90 and 90');
-	}
-
-	return value;
-};
+const validateLongitude = (value) => validateCoordinate(value, -180, 180, 'Longitude');
+const validateLatitude = (value) => validateCoordinate(value, -90, 90, 'Latitude');
 
 export default {
 	DateTime: GraphQLDateTime,
