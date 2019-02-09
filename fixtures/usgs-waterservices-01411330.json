@@ -1,0 +1,164 @@
+{
+	"name": "ns1:timeSeriesResponseType",
+	"declaredType": "org.cuahsi.waterml.TimeSeriesResponseType",
+	"scope": "javax.xml.bind.JAXBElement$GlobalScope",
+	"value": {
+		"queryInfo": {
+			"queryURL": "http://waterservices.usgs.gov/nwis/iv/format=json&parameterCd=00010&siteStatus=active&sites=01411330",
+			"criteria": {
+				"locationParam": "[ALL:01411330]",
+				"variableParam": "[00010]",
+				"parameter": []
+			},
+			"note": [
+				{
+					"value": "[ALL:01411330]",
+					"title": "filter:sites"
+				},
+				{
+					"value": "[mode=LATEST, modifiedSince=null]",
+					"title": "filter:timeRange"
+				},
+				{
+					"value": "methodIds=[ALL]",
+					"title": "filter:methodId"
+				},
+				{
+					"value": "2019-01-15T04:20:22.283Z",
+					"title": "requestDT"
+				},
+				{
+					"value": "dfe48ea0-187c-11e9-829b-6cae8b6642ea",
+					"title": "requestId"
+				},
+				{
+					"value": "Provisional data are subject to revision. Go to http://waterdata.usgs.gov/nwis/help/?provisional for more information.",
+					"title": "disclaimer"
+				},
+				{
+					"value": "sdas01",
+					"title": "server"
+				}
+			]
+		},
+		"timeSeries": [
+			{
+				"sourceInfo": {
+					"siteName": "Beach Thorofare at Margate, NJ",
+					"siteCode": [
+						{
+							"value": "01411330",
+							"network": "NWIS",
+							"agencyCode": "USGS"
+						}
+					],
+					"timeZoneInfo": {
+						"defaultTimeZone": {
+							"zoneOffset": "-05:00",
+							"zoneAbbreviation": "EST"
+						},
+						"daylightSavingsTimeZone": {
+							"zoneOffset": "-04:00",
+							"zoneAbbreviation": "EDT"
+						},
+						"siteUsesDaylightSavingsTime": true
+					},
+					"geoLocation": {
+						"geogLocation": {
+							"srs": "EPSG:4326",
+							"latitude": 39.3375,
+							"longitude": -74.5130556
+						},
+						"localSiteXY": []
+					},
+					"note": [],
+					"siteType": [],
+					"siteProperty": [
+						{
+							"value": "ES",
+							"name": "siteTypeCd"
+						},
+						{
+							"value": "02040302",
+							"name": "hucCd"
+						},
+						{
+							"value": "34",
+							"name": "stateCd"
+						},
+						{
+							"value": "34001",
+							"name": "countyCd"
+						}
+					]
+				},
+				"variable": {
+					"variableCode": [
+						{
+							"value": "00010",
+							"network": "NWIS",
+							"vocabulary": "NWIS:UnitValues",
+							"variableID": 45807042,
+							"default": true
+						}
+					],
+					"variableName": "Temperature, water, &#176;C",
+					"variableDescription": "Temperature, water, degrees Celsius",
+					"valueType": "Derived Value",
+					"unit": {
+						"unitCode": "deg C"
+					},
+					"options": {
+						"option": [
+							{
+								"name": "Statistic",
+								"optionCode": "00000"
+							}
+						]
+					},
+					"note": [],
+					"noDataValue": -999999.0,
+					"variableProperty": [],
+					"oid": "45807042"
+				},
+				"values": [
+					{
+						"value": [
+							{
+								"value": "1.2",
+								"qualifiers": [
+									"P"
+								],
+								"dateTime": "2019-01-14T22:00:00.000-05:00"
+							}
+						],
+						"qualifier": [
+							{
+								"qualifierCode": "P",
+								"qualifierDescription": "Provisional data subject to revision.",
+								"qualifierID": 0,
+								"network": "NWIS",
+								"vocabulary": "uv_rmk_cd"
+							}
+						],
+						"qualityControlLevel": [],
+						"method": [
+							{
+								"methodDescription": "",
+								"methodID": 194932
+							}
+						],
+						"source": [],
+						"offset": [],
+						"sample": [],
+						"censorCode": []
+					}
+				],
+				"name": "USGS:01411330:00010:00000"
+			}
+		]
+	},
+	"nil": false,
+	"globalScope": true,
+	"typeSubstituted": false
+}
