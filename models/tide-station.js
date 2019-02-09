@@ -86,13 +86,13 @@ export class NOAATideStation extends TideStation {
 	}
 
 	async getPredictions({ days, datum, units, interval }) {
-		const zoneName = geoTz(this.lat, this.lon);
+		const timeZones = geoTz(this.lat, this.lon);
 
 		const appName = process.env.APPLICATION;
 		const predictions = await fetchPredictionsForTideStation(this.data, { days, datum, units, interval, appName });
 
 		return predictions.map(({ t, v, type }) => {
-			const timeZone = tc.zone(zoneName);
+			const timeZone = tc.zone(timeZones[0]);
 			const date = new tc.DateTime(t, 'yyyy-MM-dd HH:mm', timeZone);
 
 			if (interval === 'h') {

@@ -61,8 +61,8 @@ export class USGSWaterTemperatureStation extends WaterTemperatureStation {
 	}
 
 	get time() {
-		const zoneName = geoTz(this.lat, this.lon);
-		const zone = tc.zone(zoneName);
+		const timeZones = geoTz(this.lat, this.lon);
+		const zone = tc.zone(timeZones[0]);
 
 		return new tc.DateTime(this.data.values[0].value[0].dateTime, zone);
 	}
@@ -105,8 +105,8 @@ export class NOAAWaterTemperatureStation extends WaterTemperatureStation {
 	}
 
 	get time() {
-		const zoneName = geoTz(this.lat, this.lon);
-		const zone = tc.zone(zoneName);
+		const timeZones = geoTz(this.lat, this.lon);
+		const zone = tc.zone(timeZones[0]);
 
 		return new tc.DateTime(this.data.data[0].t, 'yyyy-MM-dd HH:mm', zone);
 	}
