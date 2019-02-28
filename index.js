@@ -1,3 +1,3 @@
 require('dotenv').config();
 require = require('esm')(module); // eslint-disable-line no-global-assign
-module.exports = require('./main').default;
+module.exports = require('./main');
