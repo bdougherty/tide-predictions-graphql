@@ -20,7 +20,7 @@
     "@turf/bbox": "^6.0.1",
     "@turf/circle": "^6.0.1",
     "@turf/distance": "^6.0.1",
-    "apollo-server-micro": "^2.4.0",
+    "apollo-server-micro": "^2.14.2",
     "astronomia": "^2.0.1",
     "better-title-case": "^1.0.1",
     "convert-units": "github:ben-ng/convert-units#389fabc",
