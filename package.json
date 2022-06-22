@@ -29,7 +29,7 @@
     "esm": "^3.2.4",
     "geo-tz": "^5.0.1",
     "git-rev-sync": "^1.12.0",
-    "got": "^9.6.0",
+    "got": "^11.8.5",
     "graphql": "^14.1.1",
     "graphql-iso-date": "^3.6.1",
     "lru-cache": "^5.1.1",
